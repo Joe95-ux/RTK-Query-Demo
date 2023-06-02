@@ -1,9 +1,11 @@
 import Head from "next/head";
+import { useRouter } from 'next/router';
 import { useGetAllNewsQuery } from "@/store/apiSlice/newsApi";
 import { useAppDispatch, useAppSelector } from "@/store/hook";
 import { changeCurrIndex } from "@/store/slice/newsSlice";
 
 export default function News() {
+  const router = useRouter();
   const { data, error, isLoading, isError } = useGetAllNewsQuery({
     q:'apple',
     from:'2023-05-30',
@@ -27,7 +29,7 @@ export default function News() {
               {data?.articles?.map((item: any, id: any) => {
                 return (
                   <>
-                    <div className="max-w-lg mx-auto">
+                    <div className="max-w-lg mx-auto" onClick={() => router.push(`/${item.title}`)}>
                       <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm mb-5" key={id}>
                           <a href={item.url}>
                             <img className="rounded-t-lg" src={item.urlToImage} alt="" />
